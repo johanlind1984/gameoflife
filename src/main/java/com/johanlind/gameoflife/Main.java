@@ -11,11 +11,8 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
         GameOfLifeController gameOfLifeController = new GameOfLifeController(height, width);
-        gameOfLifeController.randomizeGameBoardValues();
-        MainView mainViewController = new MainView(gameOfLifeController);
-        mainViewController.randomizeCells();
-        mainViewController.runSimulation();
-
-        // trigger workflow
+        MainView manView = new MainView(gameOfLifeController);
+        manView.randomizeCells();
+        manView.runSimulation();
     }
 }

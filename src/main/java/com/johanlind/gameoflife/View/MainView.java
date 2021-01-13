@@ -20,6 +20,7 @@ public class MainView {
         this.gameOfLifeController = gameOfLifeController;
         this.gameBoard = getGameBoard();
         this.frame = getJFrame();
+        randomizeCells();
         frame.add(gameBoard);
     }
 
