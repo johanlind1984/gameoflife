@@ -23,7 +23,6 @@ public class MainViewController {
         this.gameBoard = getGameBoard();
         this.frame = getJFrame();
         frame.add(gameBoard);
-        //frame.add(getButtonComponent());
     }
 
     public void randomizeCells() {
@@ -96,22 +95,5 @@ public class MainViewController {
         JPanel aliveCell = new JPanel();
         aliveCell.setBackground(Color.RED);
         return aliveCell;
-    }
-
-    private JPanel getButtonComponent() {
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
-        JButton startButton = new JButton();
-        startButton.setSize(100,50);
-        startButton.setVisible(true);
-        startButton.setText("Start");
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                runSimulation();
-            }
-        });
-        buttonPanel.add(startButton);
-        return buttonPanel;
     }
 }
