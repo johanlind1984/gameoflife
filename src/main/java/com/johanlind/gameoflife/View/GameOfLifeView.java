@@ -1,51 +1,25 @@
-package com.johanlind.gameoflife.Controller;
+package com.johanlind.gameoflife.View;
 
 import com.johanlind.gameoflife.Engine.GameOfLifeEngine;
 import com.johanlind.gameoflife.Model.Cell;
-import lombok.Data;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.concurrent.TimeUnit;
 
-@Data
-public class MainViewController {
+public class GameOfLifeView {
+
     private GameOfLifeEngine engine;
-    private JPanel gameBoard;
-    private JFrame frame;
-    private final int resolutionWidth = 750;
-    private final int resolutionHeight = 750;
+    private final int resolutionWidth = 1080;
+    private final int resolutionHeight = 1080;
 
-    public MainViewController(GameOfLifeEngine engine) {
+    public GameOfLifeView(GameOfLifeEngine engine) {
         this.engine = engine;
-        this.gameBoard = getGameBoard();
-        this.frame = getJFrame();
-        frame.add(gameBoard);
-        //frame.add(getButtonComponent());
-    }
-
-    public void randomizeCells() {
-        engine.randomizeGameBoardValues();
-    }
-
-    public void runSimulation() {
-        ((Runnable) () -> {
-            while (true) {
-                try {
-                    nextGeneration(gameBoard);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).run();
-    }
-
-    private void nextGeneration(JPanel gameBoard) throws InterruptedException {
-        engine.generateNextGeneration();
-        refreshGameBoard(gameBoard);
-        TimeUnit.MILLISECONDS.sleep(1000);
+        JPanel gameBoardPanel = getGameBoardPanel();
+        JFrame frame = getJFrame();
+        frame.add(gameBoardPanel);
+        frame.add(getButtonComponent());
     }
 
     private void refreshGameBoard(JPanel gameBoard) {
@@ -66,7 +40,6 @@ public class MainViewController {
         }
     }
 
-    // Bryt ut denna till view
     private JFrame getJFrame() {
         JFrame frame = new JFrame("Game of Life");
         frame.setPreferredSize(new Dimension(resolutionWidth,resolutionHeight));
@@ -79,7 +52,7 @@ public class MainViewController {
         return frame;
     }
 
-    private JPanel getGameBoard() {
+    private JPanel getGameBoardPanel() {
         JPanel gameBoard = new JPanel();
         gameBoard.setLayout(new GridLayout(engine.getBoardWidth(),engine.getBoardHeight()));
         drawCells(gameBoard);
@@ -103,15 +76,13 @@ public class MainViewController {
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
         JButton startButton = new JButton();
         startButton.setSize(100,50);
-        startButton.setVisible(true);
         startButton.setText("Start");
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                runSimulation();
+
             }
         });
-        buttonPanel.add(startButton);
         return buttonPanel;
     }
 }
