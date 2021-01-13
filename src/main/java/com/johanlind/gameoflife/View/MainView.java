@@ -1,32 +1,30 @@
-package com.johanlind.gameoflife.Controller;
+package com.johanlind.gameoflife.View;
 
-import com.johanlind.gameoflife.Engine.GameOfLifeEngine;
+import com.johanlind.gameoflife.Controller.GameOfLifeController;
 import com.johanlind.gameoflife.Model.Cell;
 import lombok.Data;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.concurrent.TimeUnit;
 
 @Data
-public class MainViewController {
-    private GameOfLifeEngine engine;
+public class MainView {
+    private GameOfLifeController gameOfLifeController;
     private JPanel gameBoard;
     private JFrame frame;
     private final int resolutionWidth = 750;
     private final int resolutionHeight = 750;
 
-    public MainViewController(GameOfLifeEngine engine) {
-        this.engine = engine;
+    public MainView(GameOfLifeController gameOfLifeController) {
+        this.gameOfLifeController = gameOfLifeController;
         this.gameBoard = getGameBoard();
         this.frame = getJFrame();
         frame.add(gameBoard);
     }
 
     public void randomizeCells() {
-        engine.randomizeGameBoardValues();
+        gameOfLifeController.randomizeGameBoardValues();
     }
 
     public void runSimulation() {
@@ -42,7 +40,7 @@ public class MainViewController {
     }
 
     private void nextGeneration(JPanel gameBoard) throws InterruptedException {
-        engine.generateNextGeneration();
+        gameOfLifeController.generateNextGeneration();
         refreshGameBoard(gameBoard);
         TimeUnit.MILLISECONDS.sleep(1000);
     }
@@ -54,7 +52,7 @@ public class MainViewController {
     }
 
     private void drawCells(JPanel panel) {
-        for (Cell[] cellRow : engine.getGameBoard().getCells()) {
+        for (Cell[] cellRow : gameOfLifeController.getGameBoard().getCells()) {
             for (Cell cell : cellRow) {
                 if(cell.isAlive()) {
                     panel.add(getAliveCell());
@@ -80,7 +78,7 @@ public class MainViewController {
 
     private JPanel getGameBoard() {
         JPanel gameBoard = new JPanel();
-        gameBoard.setLayout(new GridLayout(engine.getBoardWidth(),engine.getBoardHeight()));
+        gameBoard.setLayout(new GridLayout(gameOfLifeController.getBoardWidth(), gameOfLifeController.getBoardHeight()));
         drawCells(gameBoard);
         return gameBoard;
     }

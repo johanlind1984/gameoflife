@@ -1,4 +1,4 @@
-package com.johanlind.gameoflife.Engine;
+package com.johanlind.gameoflife.Controller;
 
 import com.johanlind.gameoflife.Model.Cell;
 import com.johanlind.gameoflife.Model.GameBoard;
@@ -7,12 +7,12 @@ import lombok.Data;
 import java.util.Random;
 
 @Data
-public class GameOfLifeEngine {
+public class GameOfLifeController {
     private int boardHeight;
     private int boardWidth;
     private GameBoard gameBoard;
 
-    public GameOfLifeEngine(int boardHeight, int boardWidth) {
+    public GameOfLifeController(int boardHeight, int boardWidth) {
         this.boardHeight = boardHeight;
         this.boardWidth = boardWidth;
         this.gameBoard = new GameBoard(boardHeight, boardWidth);
