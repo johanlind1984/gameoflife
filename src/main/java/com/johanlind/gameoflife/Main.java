@@ -15,5 +15,7 @@ public class Main {
         MainView mainViewController = new MainView(gameOfLifeController);
         mainViewController.randomizeCells();
         mainViewController.runSimulation();
+
+        // trigger workflow
     }
 }
