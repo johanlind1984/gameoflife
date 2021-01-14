@@ -1,5 +1,9 @@
 package com.johanlind.gameoflife.View;
 
+import com.johanlind.gameoflife.Component.AliveCellPanel;
+import com.johanlind.gameoflife.Component.DeadCellPanel;
+import com.johanlind.gameoflife.Component.GameBoardPanel;
+import com.johanlind.gameoflife.Component.MainFrame;
 import com.johanlind.gameoflife.Controller.GameOfLifeController;
 import com.johanlind.gameoflife.Model.Cell;
 import lombok.Data;
@@ -15,11 +19,12 @@ public class MainView {
     private JFrame frame;
     private final int resolutionWidth = 750;
     private final int resolutionHeight = 750;
+    private final int gameSpeed = 1000;
 
     public MainView(GameOfLifeController gameOfLifeController) {
         this.gameOfLifeController = gameOfLifeController;
-        this.gameBoard = getGameBoard();
-        this.frame = getJFrame();
+        this.gameBoard = new GameBoardPanel(gameOfLifeController.getBoardWidth(), gameOfLifeController.getBoardHeight());
+        this.frame = new MainFrame(resolutionWidth, resolutionHeight);
         randomizeCells();
         frame.add(gameBoard);
     }
@@ -33,6 +38,7 @@ public class MainView {
             while (true) {
                 try {
                     nextGeneration(gameBoard);
+                    TimeUnit.MILLISECONDS.sleep(gameSpeed);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -43,7 +49,6 @@ public class MainView {
     private void nextGeneration(JPanel gameBoard) throws InterruptedException {
         gameOfLifeController.generateNextGeneration();
         refreshGameBoard(gameBoard);
-        TimeUnit.MILLISECONDS.sleep(1000);
     }
 
     private void refreshGameBoard(JPanel gameBoard) {
@@ -52,47 +57,15 @@ public class MainView {
         gameBoard.updateUI();
     }
 
-    private void drawCells(JPanel panel) {
+    private void drawCells(JPanel gameBoard) {
         for (Cell[] cellRow : gameOfLifeController.getGameBoard().getCells()) {
             for (Cell cell : cellRow) {
                 if(cell.isAlive()) {
-                    panel.add(getAliveCell());
+                    gameBoard.add(new AliveCellPanel());
                 } else {
-                    panel.add(getDeadCell());
+                    gameBoard.add(new DeadCellPanel());
                 }
             }
         }
-    }
-
-    // Bryt ut denna till view
-    private JFrame getJFrame() {
-        JFrame frame = new JFrame("Game of Life");
-        frame.setPreferredSize(new Dimension(resolutionWidth,resolutionHeight));
-        frame.setLayout(new GridLayout(1,1));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setResizable(false);
-        frame.setLocationByPlatform(true);
-        frame.setVisible(true);
-        return frame;
-    }
-
-    private JPanel getGameBoard() {
-        JPanel gameBoard = new JPanel();
-        gameBoard.setLayout(new GridLayout(gameOfLifeController.getBoardWidth(), gameOfLifeController.getBoardHeight()));
-        drawCells(gameBoard);
-        return gameBoard;
-    }
-
-    private JPanel getDeadCell() {
-        JPanel deadCell = new JPanel();
-        deadCell.setBackground(Color.WHITE);
-        return deadCell;
-    }
-
-    private JPanel getAliveCell() {
-        JPanel aliveCell = new JPanel();
-        aliveCell.setBackground(Color.RED);
-        return aliveCell;
     }
 }
