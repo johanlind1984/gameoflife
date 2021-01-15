@@ -9,24 +9,23 @@ import com.johanlind.gameoflife.Model.Cell;
 import lombok.Data;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.concurrent.TimeUnit;
 
 @Data
 public class MainView {
     private GameOfLifeController gameOfLifeController;
-    private JPanel gameBoard;
-    private JFrame frame;
-    private final int resolutionWidth = 750;
-    private final int resolutionHeight = 750;
-    private final int gameSpeed = 1000;
+    private JPanel gameBoardPanel;
+    private JFrame mainFrame;
+    private final int resolutionWidth = 1000;
+    private final int resolutionHeight = 1000;
+    private int gameSpeed = 250;
 
     public MainView(GameOfLifeController gameOfLifeController) {
         this.gameOfLifeController = gameOfLifeController;
-        this.gameBoard = new GameBoardPanel(gameOfLifeController.getBoardWidth(), gameOfLifeController.getBoardHeight());
-        this.frame = new MainFrame(resolutionWidth, resolutionHeight);
+        this.gameBoardPanel = new GameBoardPanel(gameOfLifeController.getBoardWidth(), gameOfLifeController.getBoardHeight());
+        this.mainFrame = new MainFrame(resolutionWidth, resolutionHeight);
         randomizeCells();
-        frame.add(gameBoard);
+        mainFrame.add(gameBoardPanel);
     }
 
     public void randomizeCells() {
@@ -37,7 +36,7 @@ public class MainView {
         ((Runnable) () -> {
             while (true) {
                 try {
-                    nextGeneration(gameBoard);
+                    nextGeneration(gameBoardPanel);
                     TimeUnit.MILLISECONDS.sleep(gameSpeed);
                 } catch (InterruptedException e) {
                     e.printStackTrace();

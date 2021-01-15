@@ -11,11 +11,15 @@ public class GameOfLifeController {
     private int boardHeight;
     private int boardWidth;
     private GameBoard gameBoard;
+    private Cell deadCell;
+    private Cell aliveCell;
 
     public GameOfLifeController(int boardHeight, int boardWidth) {
         this.boardHeight = boardHeight;
         this.boardWidth = boardWidth;
         this.gameBoard = new GameBoard(boardHeight, boardWidth);
+        this.deadCell = new Cell(false);
+        this.aliveCell = new Cell(true);
     }
 
     public void randomizeGameBoardValues() {
@@ -37,16 +41,16 @@ public class GameOfLifeController {
                 switch (surroundingCellsCount) {
                     case 2:
                         if(gameBoard.getCells()[i][j].isAlive()) {
-                            nextGenCells[i][j].setAlive(true);
+                            nextGenCells[i][j] = aliveCell;
                         } else {
-                            nextGenCells[i][j].setAlive(false);
+                            nextGenCells[i][j] = deadCell;
                         }
                         break;
                     case 3:
-                        nextGenCells[i][j].setAlive(true);
+                        nextGenCells[i][j] = aliveCell;
                         break;
                     default:
-                        nextGenCells[i][j].setAlive(false);
+                        nextGenCells[i][j] = deadCell;
                 }
             }
         }
