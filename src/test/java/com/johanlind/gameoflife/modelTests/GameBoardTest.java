@@ -1,6 +1,5 @@
 package com.johanlind.gameoflife.modelTests;
 
-import com.johanlind.gameoflife.Model.Cell;
 import com.johanlind.gameoflife.Model.GameBoard;
 import com.jparams.verifier.tostring.ToStringVerifier;
 import nl.jqno.equalsverifier.EqualsVerifier;

@@ -1,7 +1,7 @@
 package com.johanlind.gameoflife;
 
-import com.johanlind.gameoflife.View.MainView;
 import com.johanlind.gameoflife.Controller.GameOfLifeController;
+import com.johanlind.gameoflife.View.MainView;
 
 
 public class Main {
