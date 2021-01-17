@@ -1,6 +1,5 @@
 package com.johanlind.gameoflife.Model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
