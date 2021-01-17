@@ -18,7 +18,7 @@ public class MainView {
     private JFrame mainFrame;
     private final int resolutionWidth = 1000;
     private final int resolutionHeight = 1000;
-    private int gameSpeed = 250;
+    private int gameSpeed = 100;
 
     public MainView(GameOfLifeController gameOfLifeController) {
         this.gameOfLifeController = gameOfLifeController;
